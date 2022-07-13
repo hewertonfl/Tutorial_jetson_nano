@@ -54,3 +54,28 @@ cd yolact
 pip install cython
 pip install opencv-python pillow pycocotools matplotlib
  ```
+## Custom Datasets
+Você pode criar seu próprio dataset seguindos esses passos:
+ - Primeiramente é necessário criar um arquivo JSON com as anotações nas imagens.
+  - Para isso utilize o [labelme](https://github.com/wkentaro/labelme)
+
+ - Crie uma definição do dataset abaixo de  `dataset_base` em `data/config.py` (Veja os comentários em `dataset_base` para uma explicação de cada campo):
+```Python
+meu_custom_dataset = dataset_base.copy({
+    'name': 'Meu Dataset',
+
+    'train_images': 'caminho_para_imagens_de_treinamento',
+    'train_info':   'caminho_para_anotações_de_treinamento',
+
+    'valid_images': 'caminho_para_imagens_de_validação',
+    'valid_info':   'caminho_para_anotações_de_validação',
+
+    'has_gt': True,
+    'class_names': ('minha_classe_id_1', 'minha_classe_id_2', 'minha_classe_id_3', ...)
+})
+```
+ - NOTAS:
+   - Class IDs no arquivo de anotação precisa começar em 1 e aumentar sequencialmente na ordem de `class_names`. Se esse não for o caso, veja o campo `label_map` em `dataset_base`.
+   - Se você não quiser dividir uma parte do dataset para validação, use os mesmos caminhos das imagens e anotações de treinamento.
+   - Finalmente, em `yolact_base_config` no mesmo arquivo, mude`'dataset'` to `'meu_custom_dataset'` ou qualquer que seja o nome que foi dado anteriormente.
+
