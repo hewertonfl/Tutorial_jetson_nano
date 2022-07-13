@@ -78,7 +78,7 @@ pip install -U labelme2coco
   - Escolha um nome para a classe e um id para ela.
 ![Example 1](https://github.com/hewertonfl/Tutorial_jetson_nano/blob/3046e5bc0c84ed53eaa847984f49fcc82d535eaf/img_tut/imagem_2022-07-13_155634959.png)
   - Feito o dataset, é hora de converte-lo para o formato coco.
-  - Use o ccomando:
+  - Use o comando:
  ```Shell
  labelme2coco caminho/para/labelme/diretorio
   ```
@@ -105,23 +105,23 @@ meu_dataset = dataset_base.copy({
  - NOTAS:
    - Class IDs no arquivo de anotação precisa começar em 1 e aumentar sequencialmente na ordem de `class_names`. Se esse não for o caso, veja o campo `label_map` em `dataset_base`.
    - Se você não quiser dividir uma parte do dataset para validação, use os mesmos caminhos das imagens e anotações de treinamento.
-   - Finalmente, em `yolact_base_config` no mesmo arquivo, mude`'dataset'` to `'meu_custom_dataset'` ou qualquer que seja o nome que foi dado anteriormente.
-- Procure a seção Yolact config e adicione algo como:
-- Note que neste campo é possivel alterar a estrutura da rede. Neste caso temos `yolact_resnet50_config.copy`, caso queira trocar, bastar trocar o nome da configuração copiada.
+- Procure a seção Yolact config e adicione algo como a estrutura abaixo, no final da seção:
 ```Shell
 yolact_resnet50_meu_datataset_config = yolact_resnet50_config.copy({
-    'name': 'yolact_plus_resnet50_cig_butts',
+    'name': 'yolact_meu_dataset',
     # Dataset stuff
-    'dataset': cig_butts_dataset,
-    'num_classes': len(cig_butts_dataset.class_names) + 1,
+    'dataset': meu_dataset,
+    'num_classes': len(meu_dataset.class_names) + 1,
 
     # Image Size
     'max_size': 512,
 })
 ```
+  - Note que neste campo é possivel alterar a estrutura da rede. Neste caso temos `yolact_resnet50_config.copy`, caso queira trocar, bastar trocar o nome da configuração copiada.
+ 
 - Treinamento
 ```Shell 
-python train.py --config=tronco_config 
+python train.py --config=yolact_resnet50_meu_datataset_config 
  ```
 - Avaliação
   - Os pesos ficam na pasta de weights, para testa-los, apenas precisamos passar o caminho no comando.
