@@ -42,6 +42,11 @@ git clone https://github.com/ultralytics/yolov5
 cd yolov5
 pip install -r requirements.txt
  ```
+# Custom datasets
+ - Separe o dataset em pastas de treinamento de validação.
+    - Dentro de cada pasta, crie uma para imagens e anotações
+    - Divida o dataset numa proporção de 80:20 ou 75:20
+ 
  # Yolact
  - Clone o repositorio.
  ```Shell
@@ -96,4 +101,13 @@ meu_custom_dataset = dataset_base.copy({
    - Class IDs no arquivo de anotação precisa começar em 1 e aumentar sequencialmente na ordem de `class_names`. Se esse não for o caso, veja o campo `label_map` em `dataset_base`.
    - Se você não quiser dividir uma parte do dataset para validação, use os mesmos caminhos das imagens e anotações de treinamento.
    - Finalmente, em `yolact_base_config` no mesmo arquivo, mude`'dataset'` to `'meu_custom_dataset'` ou qualquer que seja o nome que foi dado anteriormente.
-
+- Treinamento
+```Shell 
+python train.py --config=tronco_config 
+ ```
+- Avaliação
+  - Os pesos ficam na pasta de weights, para testa-los, apenas precisamos passar o caminho no comando.
+  - Se for rodar no ubuntu use `python3` em vez de `python`.
+```Shell
+python eval.py --trained_model=weights/nome_do_peso.pth --score_threshold=0.7 --top_k=7 --image=caminho_da_imagem_de_entrada.JPEG:caminho_da_imagem_de_saida.png
+ ```
