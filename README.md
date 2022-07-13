@@ -82,9 +82,12 @@ pip install -U labelme2coco
  ```Shell
  labelme2coco caminho/para/labelme/diretorio
   ```
- - Crie uma definição do dataset abaixo de  `dataset_base` em `data/config.py` (Veja os comentários em `dataset_base` para uma explicação de cada campo):
-```Python
-meu_custom_dataset = dataset_base.copy({
+ # Configurando a Yolact
+ - Abra yolact/data/config.py
+ - Procure a seção datasets
+ - Adicione algo como na estrutura abaixo no final da seção datasets:
+```Shell
+meu_dataset = dataset_base.copy({
     'name': 'Meu Dataset',
 
     'train_images': 'caminho_para_imagens_de_treinamento',
@@ -94,13 +97,28 @@ meu_custom_dataset = dataset_base.copy({
     'valid_info':   'caminho_para_anotações_de_validação',
 
     'has_gt': True,
-    'class_names': ('minha_classe_id_1', 'minha_classe_id_2', 'minha_classe_id_3', ...)
+    'class_names': ('minha_classe_id_1', 'minha_classe_id_2', 'minha_classe_id_3', ... , n)
+    
+    'label_map': { 1:  n }
 })
 ```
  - NOTAS:
    - Class IDs no arquivo de anotação precisa começar em 1 e aumentar sequencialmente na ordem de `class_names`. Se esse não for o caso, veja o campo `label_map` em `dataset_base`.
    - Se você não quiser dividir uma parte do dataset para validação, use os mesmos caminhos das imagens e anotações de treinamento.
    - Finalmente, em `yolact_base_config` no mesmo arquivo, mude`'dataset'` to `'meu_custom_dataset'` ou qualquer que seja o nome que foi dado anteriormente.
+- Procure a seção Yolact config e adicione algo como:
+- Note que neste campo é possivel alterar a estrutura da rede. Neste caso temos `yolact_resnet50_config.copy`, caso queira trocar, bastar trocar o nome da configuração copiada.
+```Shell
+yolact_resnet50_meu_datataset_config = yolact_resnet50_config.copy({
+    'name': 'yolact_plus_resnet50_cig_butts',
+    # Dataset stuff
+    'dataset': cig_butts_dataset,
+    'num_classes': len(cig_butts_dataset.class_names) + 1,
+
+    # Image Size
+    'max_size': 512,
+})
+```
 - Treinamento
 ```Shell 
 python train.py --config=tronco_config 
