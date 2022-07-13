@@ -36,9 +36,21 @@ https://drive.google.com/uc?id=1tU6YlPjrP605j4z8PMnqwCSoP6sSC91Z
 pip3 install torchvision-0.10.0a0+300a8a4-cp36-cp36m-linux_aarch64.whl
 ```
 # Yolov5
-- Instalação
+- Clone e instale a depedências.
  ```Shell
 git clone https://github.com/ultralytics/yolov5
 cd yolov5
 pip install -r requirements.txt
+ ```
+ # Yolact
+ - Clone o repositorio.
+ ```Shell
+git clone https://github.com/dbolya/yolact.git
+cd yolact
+```
+- Instale outros pacotes:
+ ```Shell
+# Cython precisa ser instalados antes de pycocotools
+pip install cython
+pip install opencv-python pillow pycocotools matplotlib
  ```
