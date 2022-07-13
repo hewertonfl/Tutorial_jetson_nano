@@ -12,13 +12,13 @@
 
 # Instalação das dependências
 - Python 3.9
-- Abra o terminal do ubuntu e insira os comandos abaixo
+- Abra o terminal do ubuntu (CTRL+ALT+T) e insira os comandos abaixo:
 ```Shell
 sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt update
 sudo apt install python3.9
 ```
-- Troque o python padrão para 3.9
+- Troque o python padrão para 3.9:
  ```Shell
 sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
 sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 2
