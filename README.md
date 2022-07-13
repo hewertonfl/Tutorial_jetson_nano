@@ -58,7 +58,25 @@ pip install opencv-python pillow pycocotools matplotlib
 Você pode criar seu próprio dataset seguindos esses passos:
  - Primeiramente é necessário criar um arquivo JSON com as anotações nas imagens.
   - Para isso utilize o [labelme](https://github.com/wkentaro/labelme)
-
+  - Para usar no Windows é necessario instalar o [Anaconda](https://www.anaconda.com).
+  ```Shell
+conda create --name=labelme python=3
+conda activate labelme
+pip install labelme
+pip install -U labelme2coco
+```
+  - Para executar, rode o comando:
+ ```Shell 
+ labelme
+  ```
+  - Para anotar uma imagem abra uma imagem ou um diretório de imagens e clique em `Create Polygons`, segmente o objeto de sua preferência.
+  - Escolha um nome para a classe e um id para ela.
+![Example 1](https://github.com/hewertonfl/Tutorial_jetson_nano/blob/3046e5bc0c84ed53eaa847984f49fcc82d535eaf/img_tut/imagem_2022-07-13_155634959.png)
+  - Feito o dataset, é hora de converte-lo para o formato coco.
+  - Use o ccomando:
+ ```Shell
+ labelme2coco caminho/para/labelme/diretorio
+  ```
  - Crie uma definição do dataset abaixo de  `dataset_base` em `data/config.py` (Veja os comentários em `dataset_base` para uma explicação de cada campo):
 ```Python
 meu_custom_dataset = dataset_base.copy({
